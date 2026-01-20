@@ -1,4 +1,5 @@
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://smart-inventory-dashboard-kqq4.onrender.com";
+
 
 export const fetchProducts = async () => {
   const res = await fetch(`${API_BASE}/products`);
