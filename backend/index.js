@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const productRoutes = require("./routes/products");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -8,12 +10,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Health check / root
+const filePath = path.join(__dirname, "data/products.json");
+
 app.get("/", (req, res) => {
-  res.send("Smart Inventory Dashboard API is running");
+  const products = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  res.json(products);
 });
 
-// API routes
 app.use("/", productRoutes);
 
 app.listen(PORT, () => {
