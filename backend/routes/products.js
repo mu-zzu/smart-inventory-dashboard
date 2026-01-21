@@ -23,6 +23,7 @@ router.get("/products", (req, res) => {
 
 router.post("/update-stock", (req, res) => {
   const { id, newQuantity } = req.body;
+  const productId = Number(id);
 
   if (newQuantity < 0) {
     return res.status(400).json({
@@ -31,7 +32,8 @@ router.post("/update-stock", (req, res) => {
   }
 
   const products = readProducts();
-  const product = products.find((p) => p.id === id);
+  const product = products.find((p) => p.id === productId);
+
 
   if (!product) {
     return res.status(404).json({
