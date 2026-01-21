@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const productRoutes = require("./routes/products");
-const fs = require("fs");
-const path = require("path");
+const { router: productRoutes } = require("./routes/products");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,13 +8,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const filePath = path.join(__dirname, "data/products.json");
-
+// Browser root → show products
+const { products } = require("./routes/products");
 app.get("/", (req, res) => {
-  const products = JSON.parse(fs.readFileSync(filePath, "utf-8"));
   res.json(products);
 });
 
+// API routes
 app.use("/", productRoutes);
 
 app.listen(PORT, () => {
